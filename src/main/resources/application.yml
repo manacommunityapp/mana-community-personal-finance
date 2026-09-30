@@ -1,0 +1,40 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: mana-community-personal-finance
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/manacommunity
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_schema: manacommunity
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+
+  flyway:
+    enabled: true
+    schemas: manacommunity
+    locations: classpath:db/migration
+
+  jackson:
+    default-property-inclusion: non_null
+
+# JWT configuration — must match the main community service
+app:
+  jwt:
+    secret: ${JWT_SECRET:your-jwt-secret-key-must-be-at-least-256-bits-long-for-hs256}
+    expiration-ms: 86400000
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
